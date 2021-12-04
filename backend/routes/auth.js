@@ -4,6 +4,7 @@ const { body, validationResult } = require('express-validator');
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const fetchuser = require('../middleware/fetchuser');
 const JWT_SECRET = 'Basuisgood$boy';
 
 //Api End Point for Creating user Does not require Authentication
@@ -43,7 +44,7 @@ const JWT_SECRET = 'Basuisgood$boy';
 //       // res.json({'error': 'User already exists', message: err.message}));
       
 // })
-// Create a User using: POST "/api/auth/createuser". No login required
+// Route 1: Create a User using: POST "/api/auth/createuser". No login required
 router.post('/createuser', [
   body('name', 'Enter a valid name').isLength({ min: 3 }),
   body('email', 'Enter a valid email').isEmail(),
@@ -83,7 +84,7 @@ router.post('/createuser', [
   }
 })
 
-//Authnticate a user using: POST "/api/auth/login". No login required
+// Route 2: Authnticate a user using: POST "/api/auth/login". No login required
 router.post('/login', [
   body('email', 'Enter a valid email').isEmail(),
   body('password', 'Password cannot be blank').exists(),
@@ -117,4 +118,16 @@ router.post('/login', [
     res.status(500).send("Internal Server Errir");
   }
   });
+// Route 3: Get a user details using: POST "/api/auth/getuser". login required
+
+router.post('/getuser', fetchuser, async (req, res) => {
+try {
+  userId = req.user.id;
+  const user = await User.findById(userId).select('-password');
+  res.send(user);
+} catch (error) {
+  console.error(error.message);
+  res.status(500).send("Internal Server Errir");
+}
+});
 module.exports = router;
