@@ -5,6 +5,7 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const fetchuser = require('../middleware/fetchuser');
+const { success } = require('concurrently/src/defaults');
 const JWT_SECRET = 'Basuisgood$boy';
 
 //Api End Point for Creating user Does not require Authentication
@@ -74,9 +75,10 @@ router.post('/createuser', [
         id: user.id,
       }
     }
+    let success = true;
     const authtoken = jwt.sign(data, JWT_SECRET);
     // console.log(jwtData);
-    res.json({authtoken})
+    res.json({success, authtoken})
 
   } catch (error) {
     console.error(error.message);
@@ -97,8 +99,9 @@ router.post('/login', [
   const {email,password} = req.body;
   try{
     let user = await User.findOne({email});
+    let success = false;
     if(!user) {
-      return res.status(400).json({ error: "Please try to login with correct credentials" });
+      return res.status(400).json({ success, error: "Please try to login with correct credentials" });
     }
     const passwordCompare = bcrypt.compare(password, user.password);
     if(!passwordCompare){
@@ -109,9 +112,10 @@ router.post('/login', [
         id: user.id,
       }
     }
+  success = true;
     const authtoken = jwt.sign(data, JWT_SECRET);
     // console.log(jwtData);
-    res.json({authtoken})
+    res.json({success, authtoken})
   }
   catch (error) {
     console.error(error.message);
