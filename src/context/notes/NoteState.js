@@ -10,8 +10,7 @@ const getNotes = async () => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjFhODg1NDcwYTVmMzBhZDQ2ZGRjNDUzIn0sImlhdCI6MTYzODU5NjI3OH0.x2UH5R9XBT5UE6VcnsIFdjjDxes3sAxvv_CuMwZkA3s",
+        "auth-token": localStorage.getItem("token"),
       },
     });
     const json = await response.json();
@@ -26,8 +25,7 @@ const getNotes = async () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjFhODg1NDcwYTVmMzBhZDQ2ZGRjNDUzIn0sImlhdCI6MTYzODU5NjI3OH0.x2UH5R9XBT5UE6VcnsIFdjjDxes3sAxvv_CuMwZkA3s",
+        "auth-token": localStorage.getItem("token"),
       },
       body: JSON.stringify({title, description, tag}),
     });
@@ -42,13 +40,12 @@ const getNotes = async () => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjFhODg1NDcwYTVmMzBhZDQ2ZGRjNDUzIn0sImlhdCI6MTYzODU5NjI3OH0.x2UH5R9XBT5UE6VcnsIFdjjDxes3sAxvv_CuMwZkA3s",
+        "auth-token": localStorage.getItem("token"),
       },
       body: JSON.stringify({title, description, tag}),
     });
     const json = await response.json();
-    // console.log(json);
+    console.log(json);
     //logic to edit in client side
 
     let newNotes = JSON.parse(JSON.stringify(notes))
@@ -71,13 +68,12 @@ const getNotes = async () => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjFhODg1NDcwYTVmMzBhZDQ2ZGRjNDUzIn0sImlhdCI6MTYzODU5NjI3OH0.x2UH5R9XBT5UE6VcnsIFdjjDxes3sAxvv_CuMwZkA3s",
+        "auth-token": localStorage.getItem("token"),
       }
       
     });
     const json = response.json();
-    // console.log("Deleting a note" + json);
+    console.log("Deleting a note" + json);
     const newNotes = notes.filter((note) => {
       return note._id !== id;
     });
