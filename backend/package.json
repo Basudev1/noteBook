@@ -4,13 +4,15 @@
   "description": "This is a Backend API for the notebook React App ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
     "express": "^4.17.1",
     "express-validator": "^6.13.0",
     "jsonwebtoken": "^8.5.1",

@@ -1,8 +1,9 @@
-const mongoose = require('mongoose');
-const mongoURI = "mongodb://localhost:27017/mynotebook?readPreference=primary&appname=MongoDB%20Compass&ssl=false";
+const mongoose = require("mongoose");
+require("dotenv").config();
+const mongoURI = process.env.mongoURI;
 const connectMongo = () => {
-    mongoose.connect(mongoURI, () =>{
-        console.log('MongoDB connected');
-    })
-}
+  mongoose.connect(mongoURI, () => {
+    console.log("MongoDB connected");
+  });
+};
 module.exports = connectMongo;
