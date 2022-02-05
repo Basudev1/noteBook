@@ -2,6 +2,10 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+Built With Nodejs, React, Mongodb
+
+![noteapp](https://github.com/Basudev1/noteBook/blob/master/noteapp.png)
+
 ## Available Scripts
 
 In the project directory, you can run:
