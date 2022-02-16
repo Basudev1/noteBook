@@ -1,22 +1,24 @@
-import React, {useState} from "react";
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = (props) => {
   const navigate = useNavigate();
   const [credentials, setcredentials] = useState({ email: "", password: "" });
   const handleSubmit = async (e) => {
-
     e.preventDefault();
-    const response = await fetch(`http://localhost:5000/api/auth/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: credentials.email,
-        password: credentials.password,
-      }),
-    });
+    const response = await fetch(
+      `https://my-notebook-mern.herokuapp.com/api/auth/login`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: credentials.email,
+          password: credentials.password,
+        }),
+      }
+    );
     const json = await response.json();
     console.log(json);
     if (json.success) {
@@ -28,7 +30,6 @@ const Login = (props) => {
       // alert(json.error);
       props.showAlert("Invalid Credentials", "danger");
     }
-   
   };
   const onChange = (e) => {
     setcredentials({ ...credentials, [e.target.name]: e.target.value });

@@ -11,45 +11,47 @@ const Signup = (props) => {
   const handleSubmit = async (e) => {
     const { name, email, password } = credentials;
     e.preventDefault();
-  let passwd = credentials.password;
-  let cpassword = credentials.cpassword;
+    let passwd = credentials.password;
+    let cpassword = credentials.cpassword;
 
-  if(passwd !== cpassword){
-    // alert("Passwords do not match");
-    props.showAlert("Passwords do not match", "danger");
+    if (passwd !== cpassword) {
+      // alert("Passwords do not match");
+      props.showAlert("Passwords do not match", "danger");
       setcredentials({
         password: "",
         cpassword: "",
       });
-  }
-  else{
-    const response = await fetch(`http://localhost:5000/api/auth/createuser`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({name, email, password}),
-    });
-    const json = await response.json();
-    console.log(json);
-    if (json.success) {
-      localStorage.setItem("token", json.authtoken);
-      // window.location = "/";
-      navigate("/");
-      props.showAlert("Account Created Successfully", "success");
     } else {
-      // alert("Some Error occured, Please try again");
-      props.showAlert("Some Error occured", "danger");
+      const response = await fetch(
+        `https://my-notebook-mern.herokuapp.com/api/auth/createuser`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, email, password }),
+        }
+      );
+      const json = await response.json();
+      console.log(json);
+      if (json.success) {
+        localStorage.setItem("token", json.authtoken);
+        // window.location = "/";
+        navigate("/");
+        props.showAlert("Account Created Successfully", "success");
+      } else {
+        // alert("Some Error occured, Please try again");
+        props.showAlert("Some Error occured", "danger");
+      }
     }
   };
-}
   const onChange = (e) => {
     setcredentials({ ...credentials, [e.target.name]: e.target.value });
   };
   return (
     <div>
       <form onSubmit={handleSubmit}>
-      <h2 className="mb-3">Login to Continue</h2>
+        <h2 className="mb-3">Login to Continue</h2>
         <div className="mb-3">
           <label htmlFor="username" className="form-label">
             Username
